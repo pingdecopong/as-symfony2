@@ -9,4 +9,9 @@
 
 include_recipe 'as-apache2::default'
 include_recipe 'as-php::default'
-include_recipe 'as-symfony2::create'
+
+# download composer
+execute 'composer-install' do
+  command 'curl -sS https://getcomposer.org/installer | php ;mv composer.phar /usr/local/bin/composer'
+  not_if { ::File.exists?('/usr/local/bin/composer') }
+end

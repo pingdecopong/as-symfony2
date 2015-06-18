@@ -7,35 +7,42 @@ provisioner:
 
 platforms:
   - name: centos-6.6
-#  - name: centos-7.1
+  - name: centos-7.1
 
 suites:
   - name: centos_php54
     run_list:
-      - recipe[as-symfony2::default]
+      - recipe[as-symfony2::create]
+      - recipe[as-symfony2::install]
     attributes:
       php:
         version: '5.4'
         date.timezone: 'Asia/Tokyo'
         xdebug:
           remote_enable: true
-        symfony2:
-          path: '/var/app'
-#  - name: centos_php55
-#    run_list:
-#      - recipe[as-symfony2::default]
-#    attributes:
-#      php:
-#        version: '5.5'
-#        date.timezone: 'Asia/Tokyo'
-#        xdebug:
-#          remote_enable: true
-#  - name: centos_php56
-#    run_list:
-#      - recipe[as-symfony2::default]
-#    attributes:
-#      php:
-#        version: '5.6'
-#        date.timezone: 'Asia/Tokyo'
-#        xdebug:
-#          remote_enable: true
+      symfony2:
+        path: '/var/app'
+  - name: centos_php55
+    run_list:
+      - recipe[as-symfony2::create]
+#      - recipe[as-symfony2::install]
+    attributes:
+      php:
+        version: '5.5'
+        date.timezone: 'Asia/Tokyo'
+        xdebug:
+          remote_enable: true
+      symfony2:
+        path: '/var/app'
+  - name: centos_php56
+    run_list:
+      - recipe[as-symfony2::create]
+#      - recipe[as-symfony2::install]
+    attributes:
+      php:
+        version: '5.6'
+        date.timezone: 'Asia/Tokyo'
+        xdebug:
+          remote_enable: true
+      symfony2:
+        path: '/var/app'
