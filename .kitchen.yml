@@ -6,7 +6,7 @@ provisioner:
   name: chef_zero
 
 platforms:
-  - name: centos-6.6
+#  - name: centos-6.6
   - name: centos-7.1
 
 suites:
@@ -22,6 +22,7 @@ suites:
           remote_enable: true
       symfony2:
         path: '/var/app'
+        acl: false
   - name: centos_php55
     run_list:
       - recipe[as-symfony2::create]
@@ -34,6 +35,7 @@ suites:
           remote_enable: true
       symfony2:
         path: '/var/app'
+        acl: false
   - name: centos_php56
     run_list:
       - recipe[as-symfony2::create]
@@ -46,3 +48,4 @@ suites:
           remote_enable: true
       symfony2:
         path: '/var/app'
+        acl: false

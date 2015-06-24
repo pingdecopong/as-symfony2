@@ -41,3 +41,11 @@ end
 execute '権限変更' do
   command "sudo chmod -R 755 #{node[:symfony2][:path]}"
 end
+
+bash 'cache log ディレクトリ権限変更' do
+  code <<-EOH
+      setfacl -R -m u:#{node['symfony2']['execute_user']}:rwx -m u:#{node['symfony2']['maintenance']['user']}:rwx #{node['symfony2']['path']}/app/cache #{node['symfony2']['path']}/app/logs
+      setfacl -dR -m u:#{node['symfony2']['execute_user']}:rwx -m u:#{node['symfony2']['maintenance']['user']}:rwx #{node['symfony2']['path']}/app/cache #{node['symfony2']['path']}/app/logs
+  EOH
+  only_if node[ :symfony2 ][ :acl ]
+end
