@@ -8,7 +8,7 @@ GRAPH
   as-php (0.0.3)
     yum-epel (>= 0.0.0)
     yum-remi (>= 0.0.0)
-  as-symfony2 (0.0.3)
+  as-symfony2 (0.0.4)
     as-apache2 (>= 0.0.0)
     as-php (>= 0.0.0)
   yum (3.6.1)

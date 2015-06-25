@@ -6,14 +6,14 @@ provisioner:
   name: chef_zero
 
 platforms:
-#  - name: centos-6.6
+  - name: centos-6.6
   - name: centos-7.1
 
 suites:
   - name: centos_php54
     run_list:
       - recipe[as-symfony2::create]
-      - recipe[as-symfony2::install]
+#      - recipe[as-symfony2::install]
     attributes:
       php:
         version: '5.4'

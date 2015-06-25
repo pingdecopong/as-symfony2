@@ -19,10 +19,42 @@ execute '権限変更' do
   command "sudo chmod -R 755 #{node[:symfony2][:path]}"
 end
 
-bash 'cache log ディレクトリ権限変更' do
-  code <<-EOH
+if node[ :symfony2 ][ :acl ]
+
+  bash 'cache log ディレクトリ権限変更' do
+    code <<-EOH
       setfacl -R -m u:#{node['symfony2']['execute_user']}:rwx -m u:#{node['symfony2']['maintenance']['user']}:rwx #{node['symfony2']['path']}/app/cache #{node['symfony2']['path']}/app/logs
       setfacl -dR -m u:#{node['symfony2']['execute_user']}:rwx -m u:#{node['symfony2']['maintenance']['user']}:rwx #{node['symfony2']['path']}/app/cache #{node['symfony2']['path']}/app/logs
-  EOH
-  only_if node[ :symfony2 ][ :acl ]
+    EOH
+    only_if {node[ :symfony2 ][ :acl ]}
+  end
+
+else
+
+  execute 'キャッシュディレクトリ　権限変更' do
+    command <<"EOC"
+    cd #{node['symfony2']['path']}
+    chmod -R 775 app/cache
+EOC
+  end
+
+  execute 'ログディレクトリ　権限変更' do
+    command <<"EOC"
+    cd #{node['symfony2']['path']}
+    chmod -R 775 app/logs
+EOC
+  end
+
+  group "#{node['symfony2']['maintenance']['group']}" do
+    members node['symfony2']['execute_user']
+    action :modify
+    append true
+  end
+
+  group "#{node['symfony2']['execute_group']}" do
+    members "#{node['symfony2']['maintenance']['user']}"
+    action :modify
+    append true
+  end
+
 end
